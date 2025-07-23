@@ -9,5 +9,5 @@ public static class ModHelperData
     public const string Description = "uhh soo i basically needed something that read game files stuff so i could make a project yeahhh";
 
     public const string RepoOwner = "zycata"; // TODO add your github username hero, also in the download url in README.md
-    public const string RepoName = "Data_Reader"; // TODO add your repo name here, also in the download url in README.md
+    public const string RepoName = "DATAREADERBTD6"; // TODO add your repo name here, also in the download url in README.md
 }
