@@ -34,6 +34,10 @@ using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 // Custom project namespaces
 using DATAREADER;
 using System.Runtime.CompilerServices;
+using Il2CppAssets.Scripts.Simulation.Track;
+using Il2CppAssets.Scripts.Models.Bloons;
+using Il2CppAssets.Scripts.Simulation.Bloons;
+using Il2CppAssets.Scripts.Unity.Map;
 
 
 [assembly: MelonInfo(typeof(DATAREADER.DATAREADER), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
@@ -68,10 +72,25 @@ public class DATAREADER : BloonsTD6Mod
 
     }
     public override void OnRoundEnd() 
-        {
+    {
             ModHelper.Msg<DATAREADER>("round has ended!"); 
 
     }
+
+
+    public override void OnBloonEmitted(Spawner spawner, BloonModel bloonModel, int round, int index, float startingDist, ref Bloon bloon)
+    {
+        base.OnBloonEmitted(spawner, bloonModel, round, index, startingDist, ref bloon);
+        //ModHelper.Msg<DATAREADER>($"Bloon Emitted: {bloonModel.name} at round {round} with index {index} and starting distance {startingDist}");
+    }
+
+    public override void OnBloonModelUpdated(Bloon bloon, Model model)
+    {
+        base.OnBloonModelUpdated(bloon, model);
+        ModHelper.Msg<DATAREADER>($"Bloon Model Updated: {model.name} with ID");
+    }
+
+    
     /*
     public override void OnUpdate()
     {
@@ -88,6 +107,13 @@ public class DATAREADER : BloonsTD6Mod
             ModHelper.Msg<DATAREADER>(e.Message);
         }
     }*/
+
+    //public override void 
+    public override void OnMatchStart()
+    {
+        gameOver = false;
+        wonGame = false;
+    }
 
     public override void OnMatchEnd()
     {
@@ -155,7 +181,7 @@ public class DATAREADER : BloonsTD6Mod
     int startRound =0;
     List<AbilityData> AbilityInformations = new List<AbilityData>();
 
-    string filePath = "gameData";
+    string filePath = "gameData/";
     private void writeData ()
     {
         GameData gameData = new GameData
@@ -181,7 +207,7 @@ public class DATAREADER : BloonsTD6Mod
         string jsonString = JsonSerializer.Serialize<GameData>(gameData, options);
         MelonLogger.Msg($"{jsonString}");
         
-        File.WriteAllText(filePath + "/gameData.json", jsonString);
+        File.WriteAllText(filePath + "gameData.json", jsonString);
         logIteration += 1;
     }
 
@@ -234,7 +260,7 @@ public class DATAREADER : BloonsTD6Mod
 
                 foreach (var ability in abilities)
                 {
-                    MelonLogger.Msg($"Ability: {ability.tower} Can Use?: {ability.IsReady} CoolDownRemaining: {ability.CooldownRemaining}");
+                    // MelonLogger.Msg($"Ability: {ability.tower} Can Use?: {ability.IsReady} CoolDownRemaining: {ability.CooldownRemaining}");
                     AbilityData newAbility = new AbilityData(ability.IsReady, ability.CooldownRemaining);
                     myAbilityList.Add(newAbility);
                     totalAbilities++;
