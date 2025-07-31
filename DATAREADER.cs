@@ -84,11 +84,6 @@ public class DATAREADER : BloonsTD6Mod
         //ModHelper.Msg<DATAREADER>($"Bloon Emitted: {bloonModel.name} at round {round} with index {index} and starting distance {startingDist}");
     }
 
-    public override void OnBloonModelUpdated(Bloon bloon, Model model)
-    {
-        base.OnBloonModelUpdated(bloon, model);
-        ModHelper.Msg<DATAREADER>($"Bloon Model Updated: {model.name} with ID");
-    }
 
     
     /*
