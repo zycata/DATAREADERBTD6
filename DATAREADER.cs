@@ -162,8 +162,8 @@ public class DATAREADER : BloonsTD6Mod
 
         public int StartRound { get; set; }
 
-        public List<AbilityData> Abilities { get; set; } = new List<AbilityData>();
-
+        // public List<AbilityData> Abilities { get; set; } = new List<AbilityData>();
+        public List<int> Abilities { get; set; }
     }
     bool gameOver = false;
     bool wonGame = false;
@@ -174,7 +174,8 @@ public class DATAREADER : BloonsTD6Mod
     int  totalTowersPlaced = 0;
     int totalAbilities = 0;
     int startRound =0;
-    List<AbilityData> AbilityInformations = new List<AbilityData>();
+    // List<AbilityData> AbilityInformations = new List<AbilityData>();
+    List<int> AbilityInformations = new List<int>();
 
     string filePath = "gameData/";
     private void writeData ()
@@ -250,16 +251,18 @@ public class DATAREADER : BloonsTD6Mod
 
                 var abilities = InGame.instance.GetAbilities();
                 var totalAbilities = 0;
-                List<AbilityData> myAbilityList = new List<AbilityData>();
-
+                //List<AbilityData> myAbilityList = new List<AbilityData>();
+                List<int> myAbilityList = new List<int>();
 
                 foreach (var ability in abilities)
                 {
                     // MelonLogger.Msg($"Ability: {ability.tower} Can Use?: {ability.IsReady} CoolDownRemaining: {ability.CooldownRemaining}");
-                    AbilityData newAbility = new AbilityData(ability.IsReady, ability.CooldownRemaining);
+                    // AbilityData newAbility = new AbilityData(ability.IsReady, ability.CooldownRemaining);
+                    // newAbility.Add(newAbility);
+                    int newAbility = (int)ability.CooldownRemaining;
                     myAbilityList.Add(newAbility);
                     totalAbilities++;
-                    MelonLogger.Msg(newAbility.ToString() );
+                    // MelonLogger.Msg(newAbility.ToString() );
                 }
                 AbilityInformations.Clear();
                 AbilityInformations = myAbilityList;
